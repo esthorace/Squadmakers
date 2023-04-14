@@ -9,11 +9,6 @@ app = FastAPI()
 app.include_router(chistes.router)
 
 
-@app.get("/")
-async def root():
-    return {"mensaje": "Hola mundo"}
-
-
 @app.get("/yaml")
 async def openapi_yaml():
     rutas = [ruta for ruta in app.routes if ruta.path != "/yaml"]
