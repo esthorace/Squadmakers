@@ -1,11 +1,26 @@
-import uvicorn
 from fastapi import FastAPI
-from routers import chistes
+from fastapi.openapi.utils import get_openapi
+from fastapi.responses import JSONResponse
+
+from .routers import chistes
 
 app = FastAPI()
 
 app.include_router(chistes.router)
 
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+@app.get("/")
+async def root():
+    return {"mensaje": "Hola mundo"}
+
+
+@app.get("/yaml")
+async def openapi_yaml():
+    rutas = [ruta for ruta in app.routes if ruta.path != "/yaml"]
+    openapi_schema = get_openapi(
+        title="Squadmakers",
+        version="0.0.1",
+        description="Aplicación reto",
+        routes=rutas,
+    )
+    return JSONResponse(content=openapi_schema)
