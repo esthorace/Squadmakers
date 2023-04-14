@@ -7,6 +7,9 @@ description = ""
 authors = [
     {name = "Esteban Acevedo", email = "esteban.horacio.acevedo@gmail.com"},
 ]
-dependencies = []
+dependencies = [
+    "fastapi[all]>=0.95.1",
+    "sqlmodel>=0.0.8",
+]
 requires-python = ">=3.11"
 license = {text = "MIT"}
