@@ -13,7 +13,7 @@ app.include_router(matematicas.router)
 
 @app.get("/yaml")
 async def openapi_yaml():
-    rutas = [ruta for ruta in app.routes if ruta.path != "/yaml"]
+    rutas = [ruta for ruta in app.routes if ruta.path != "/yaml"]  # type:ignore
     openapi_schema = get_openapi(
         title="Squadmakers",
         version="0.0.1",
