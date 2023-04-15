@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
+from . import database
 from .routers import chistes, matematicas
 
 app = FastAPI()
@@ -20,3 +21,9 @@ async def openapi_yaml():
         routes=rutas,
     )
     return JSONResponse(content=openapi_schema)
+
+
+@app.on_event("startup")
+def on_startup():
+    if not database.ruta_archivo.exists():
+        database.crear_base_de_datos()
