@@ -10,11 +10,10 @@ class ChisteBase(SQLModel):
 
 class Chiste(ChisteBase, table=True):
     number: Optional[int] = Field(default=None, primary_key=True)
-    pass
 
 
 class ChisteCrear(ChisteBase):
-    pass
+    number: int
 
 
 class ChisteLeer(ChisteBase):
