@@ -45,8 +45,8 @@ async def guardar_chiste(query: str | None = Query(None, description="pokemon: C
     with Session(engine) as session:
         session.add(nuevo_chiste)
         session.commit()
-
-    return {"chiste": chiste_text, "pokemon": pokemon_text}
+        session.refresh(nuevo_chiste)
+    return {"chiste": chiste_text, "pokemon": pokemon_text, "number": nuevo_chiste.number}
 
 
 @router.put("/chistes/{chiste_number}", response_model=ChisteActualizar)
@@ -66,7 +66,7 @@ async def actualizar_chiste(chiste_number: int, query: str | None = Query(None, 
         session.add(chiste)
         session.commit()
         session.refresh(chiste)
-        return chiste
+        return {"chiste": chiste.chiste, "pokemon": chiste.pokemon}
 
 
 @router.delete("/chistes/{chiste_number}")
