@@ -1,5 +1,23 @@
 # Reto Backend FastAP
 
+## Aviso!
+
+La rama `dev` es otra versión que contiene una estructura de proyecto más prolija y escalable. Creo que esa es la principal, pero como no quise pisar `master` dado los tiempos de commits que aparecen dentro del límite dado, dejé las dos ramas. Prefiero que vean la otra.
+
+
+## Instalación y ejecución del proyecto actual
+
+```bash
+pip install requirements.txt
+uvicorn app.main:app --reload
+```
+
+## Tests
+
+```bash
+pytest -v
+```
+
 ## Respuesta a la pregunta
 
 **¿Qué repositorio utilizarías? PostgreSQL, MariaDB, Casandra, MongoDB, ElasticSearch, Oracle, SQL Server**
@@ -44,15 +62,4 @@ def eliminar_chiste(chiste_id: str):
     chistes_collection.delete_one({"_id": chiste_id})
 ```
 
-## Instalación y ejecución del proyecto actual
 
-```bash
-pip install requirements.txt
-uvicorn app.main:app --reload
-```
-
-## Tests
-
-```bash
-pytest -v
-```
