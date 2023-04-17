@@ -1,12 +1,7 @@
 import math
 
-from fastapi import APIRouter, Query
 
-router = APIRouter()
-
-
-@router.get("/matematica")
-async def mínimo_múltiplo_común(numbers: list[int] = Query(..., description="Lista de números enteros")):
+async def minimo_multiplo_comun_handler(numbers):
     """
     Recibe una lista de números enteros y devuelve su mínimo común múltiplo.
     """
@@ -16,8 +11,7 @@ async def mínimo_múltiplo_común(numbers: list[int] = Query(..., description="
     return {"mínimo común múltiplo": mcm}
 
 
-@router.get("/matematica/sumar_uno")
-async def incrementar_número(number: int = Query(..., description="Número entero a incrementar +1")):
+async def incrementar_numero_handler(number):
     """
     Recibe un número entero y devuelve ese número + 1.
     """

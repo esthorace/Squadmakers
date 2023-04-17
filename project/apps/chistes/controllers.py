@@ -1,18 +1,15 @@
 import random
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import HTTPException
 from sqlmodel import Session
 
-from ..controllers.API_solicitud import solicitud
-from ..database import engine
-from ..models.model_chistes import Chiste, ChisteActualizar, ChisteCrear
-from .data.data_chistes import URLS_CHISTES
-
-router = APIRouter()
+from ...common.API_solicitud import solicitud
+from ...database import engine
+from .data import URLS_CHISTES
+from .models import Chiste
 
 
-@router.get("/chistes")
-async def obtener_chistes(query: str | None = Query(None, description="pokemon: Chuck o Dad")) -> dict:
+async def obtener_chistes_handler(query: str | None) -> dict:
     """
     Obtiene chistes de servicios API, no de la base de datos.
     Recibe un parámetro, si es 'Chuk' o 'Dad', devuelve un chiste de la url preestablecida,
@@ -32,12 +29,11 @@ async def obtener_chistes(query: str | None = Query(None, description="pokemon: 
     return {"chiste": chiste, "pokemon": query}
 
 
-@router.post("/chistes", response_model=ChisteCrear)
-async def guardar_chiste(query: str | None = Query(None, description="pokemon: Chuck o Dad")) -> dict:
+async def guardar_chiste_handler(query: str | None) -> dict:
     """
     Recibe un chiste de los servicios API y lo guarda en la base de datos
     """
-    response = await obtener_chistes(query)
+    response = await obtener_chistes_handler(query)
     chiste_text = response["chiste"]
     pokemon_text = response["pokemon"]
     nuevo_chiste = Chiste(chiste=chiste_text, pokemon=pokemon_text)
@@ -49,8 +45,7 @@ async def guardar_chiste(query: str | None = Query(None, description="pokemon: C
     return {"chiste": chiste_text, "pokemon": pokemon_text, "number": nuevo_chiste.number}
 
 
-@router.put("/chistes/{chiste_number}", response_model=ChisteActualizar)
-async def actualizar_chiste(chiste_number: int, query: str | None = Query(None, description="pokemon: Chuck o Dad")):
+async def actualizar_chiste_handler(chiste_number: int, query: str | None) -> dict:
     """
     Recibe como parámetro un número entero que es el id de un chiste guardado en la base de datos.
     Si no existe, devuelve un error. Si existe, lo actualiza por uno nuevo.
@@ -60,7 +55,7 @@ async def actualizar_chiste(chiste_number: int, query: str | None = Query(None, 
         if not chiste:
             raise HTTPException(status_code=404, detail="Chiste no encontrado")
 
-        response = await obtener_chistes(query)
+        response = await obtener_chistes_handler(query)
         chiste.chiste = response["chiste"]
         chiste.pokemon = response["pokemon"]
         session.add(chiste)
@@ -69,8 +64,7 @@ async def actualizar_chiste(chiste_number: int, query: str | None = Query(None, 
         return {"chiste": chiste.chiste, "pokemon": chiste.pokemon}
 
 
-@router.delete("/chistes/{chiste_number}")
-async def eliminar_chiste(chiste_number: int):
+async def eliminar_chiste_handler(chiste_number: int) -> dict:
     """
     Recibe como parámetro un número entero que es el id de un chiste guardado en la base de datos.
     Si no existe, devuelve un error. Si existe, lo elimina.

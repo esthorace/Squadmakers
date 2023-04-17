@@ -3,12 +3,12 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.responses import JSONResponse
 
 from . import database
-from .routers import chistes, matematicas
+from .apps import chistes, matematicas
 
 app = FastAPI()
 
-app.include_router(chistes.router)
 app.include_router(matematicas.router)
+app.include_router(chistes.router)
 
 
 @app.get("/yaml")

@@ -1,5 +1,18 @@
 # Reto Backend FastAP
 
+## Instalación y ejecución del proyecto actual
+
+```bash
+pip install requirements.txt
+uvicorn project.main:app --reload
+```
+
+## Tests
+
+```bash
+pytest -v
+```
+
 ## Respuesta a la pregunta
 
 **¿Qué repositorio utilizarías? PostgreSQL, MariaDB, Casandra, MongoDB, ElasticSearch, Oracle, SQL Server**
@@ -42,17 +55,4 @@ def actualizar_chiste(chiste_id: str, chiste_text: str, pokemon_text: str):
 
 def eliminar_chiste(chiste_id: str):
     chistes_collection.delete_one({"_id": chiste_id})
-```
-
-## Instalación y ejecución del proyecto actual
-
-```bash
-pip install requirements.txt
-uvicorn app.main:app --reload
-```
-
-## Tests
-
-```bash
-pytest -v
 ```

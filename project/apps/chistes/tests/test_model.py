@@ -1,7 +1,7 @@
 from pytest import fixture
 from sqlmodel import Session, create_engine
 
-from app.models.model_chistes import Chiste
+from project.models.model_chistes import Chiste
 
 
 @fixture(scope="module")
