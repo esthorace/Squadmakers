@@ -13,11 +13,7 @@ class Chiste(ChisteBase, table=True):
 
 
 class ChisteCrear(ChisteBase):
-    number: int
-
-
-class ChisteLeer(ChisteBase):
-    number: int
+    pass
 
 
 class ChisteActualizar(ChisteBase):
