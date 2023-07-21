@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Query
 
-from ...database import engine
 from .controllers import (
     actualizar_chiste_handler,
     eliminar_chiste_handler,
